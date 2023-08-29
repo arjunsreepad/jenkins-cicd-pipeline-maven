@@ -20,16 +20,16 @@ This Delivery Pipeline extends the  CI Pipeline implemented in the previous Lab.
 - Configure the SonarQube server in Jenkins
 
      -  Name: my_sonarqube_in_docker
-     -  Server URL: `http://host.docker.internal:9000`
+     -  Server URL: `http://localhost:9000`
      -  Authentication: NONE
-     Be sure that the Jenkins URL should be:` http://host.docker.internal: 8080`
+     Be sure that the Jenkins URL should be:` http://localhost: 8080`
 
 - Back to SonarQube dashbooard and create a web hook to Jenkins
 
    - From  "Administration" menu option, select "Configuration" option, then choose Web Hooks from its Dropdown
    - Configure the web hook
       - Give a name to the Web hook (for example my-webhook-to-jenkins)
-      - URL: `http://host.docker.internal:8080/sonarqube-webhook/` (Use strictly this form)
+      - URL: `http://localhost:8080/sonarqube-webhook/` (Use strictly this form)
       - No need to fill in the secret as we are conversing anonymously with SonarQube.
 
 ### Starting Nexus et Creating a Repository and User

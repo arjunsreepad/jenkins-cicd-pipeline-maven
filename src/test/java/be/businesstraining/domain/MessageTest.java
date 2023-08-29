@@ -13,7 +13,7 @@ public class MessageTest {
 
 	@Test
 	public void messageSaysHello() {
-		assertThat(message.sayHello(), containsString("Hello World"));
+		assertThat(message.sayHello(), containsString("Hello AHB"));
 	}
 
 }

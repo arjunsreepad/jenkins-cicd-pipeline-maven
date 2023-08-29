@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo "====++++  Static Code Analysis (SonarQube) ++++===="
                 withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonarqube') {
-                    sh "mvn clean package -Dsurefire.skip=true sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=${projectName} -Dsonar.projectKey=${projectName} -Dsonar.projectVersion=\$BUILD_NUMBER"
+                    sh "mvn clean package -Dsurefire.skip=true sonar:sonar -Dsonar.projectName=${projectName} -Dsonar.projectKey=${projectName} -Dsonar.projectVersion=\$BUILD_NUMBER"
                 }
             }
         }

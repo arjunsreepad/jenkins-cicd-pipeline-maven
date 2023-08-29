@@ -31,12 +31,12 @@ pipeline{
             }           
         }
 
-        stage("Docker Build & Push")
+        stage("Docker Build & Push"){
             steps{
                 sh  ''' docker build -t good-day .'''
             }
-        
-        stage("Deploy")
+        }
+        stage("Deploy"){
             steps{
                 sh  '''
                 container_id=$(docker ps -aqf "name=good-day")
@@ -53,6 +53,7 @@ pipeline{
                 docker run -d -p 9090:8080 --name good-day good-day'''
                     
             }
+        }
         
-        
-    }}
+    }
+}

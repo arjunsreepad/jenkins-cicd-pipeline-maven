@@ -25,8 +25,9 @@ pipeline{
         stage("Static Code Analysis (SonarQube)"){
             steps{
                 echo "====++++  Static Code Analysis (SonarQube) ++++===="
-                sh "mvn clean package clean package -Dsurefire.skip=true sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin@123  -Dsonar.projectName=08-jenkins-cicd-pipeline-maven-02-continious-delivery -Dsonar.projectKey=08-jenkins-cicd-pipeline-maven-02-continious-delivery -Dsonar.projectVersion=$BUILD_NUMBER";
-               
+                withSonarQubeEnv(credentialsId: 'sonar-toke'){
+                sh "mvn clean package clean package -Dsurefire.skip=true sonar:sonar -Dsonar.host.url=http://localhost:9000  -Dsonar.projectName=08-jenkins-cicd-pipeline-maven-02-continious-delivery -Dsonar.projectKey=08-jenkins-cicd-pipeline-maven-02-continious-delivery -Dsonar.projectVersion=$BUILD_NUMBER";
+                }   
                
             }           
         }

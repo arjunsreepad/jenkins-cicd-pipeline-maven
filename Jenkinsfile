@@ -25,7 +25,7 @@ pipeline{
         stage("Static Code Analysis (SonarQube)"){
             steps{
                 echo "====++++  Static Code Analysis (SonarQube) ++++===="
-                withSonarQubeEnv(credentialsId: 'sonar-toke'){
+                withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar-scanner'){
                 sh "mvn clean package clean package -Dsurefire.skip=true sonar:sonar -Dsonar.host.url=http://localhost:9000  -Dsonar.projectName=08-jenkins-cicd-pipeline-maven-02-continious-delivery -Dsonar.projectKey=08-jenkins-cicd-pipeline-maven-02-continious-delivery -Dsonar.projectVersion=$BUILD_NUMBER";
                 }   
                

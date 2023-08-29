@@ -29,7 +29,16 @@ pipeline {
             steps {
                 echo "====++++  Static Code Analysis (SonarQube) ++++===="
                 withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonarqube') {
-                    sh "mvn clean package -Dsurefire.skip=true sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=${projectName} -Dsonar.projectKey=${projectName} -Dsonar.projectVersion=\$BUILD_NUMBER"
+                    sh """
+                    mvn clean package -Dsurefire.skip=true sonar:sonar \
+                      -Dsonar.host.url=http://localhost:9000 \
+                      -Dsonar.projectName=${projectName} \
+                      -Dsonar.projectKey=${projectName} \
+                      -Dsonar.projectVersion=\$BUILD_NUMBER \
+                      -Dsonar.junit.reportPaths=target/surefire-reports/ \
+                      -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                    """
+
                 }
             }
         }
@@ -37,9 +46,11 @@ pipeline {
         // Docker Build & Push
         stage("Docker Build & Push") {
             steps {
-                sh "docker build -t arjunsreepad/${projectName} ."
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                sh "docker push arjunsreepad/${projectName}"
+                sh ''' 
+                docker build -t arjunsreepad/${projectName} .
+                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                docker push arjunsreepad/${projectName}
+                 '''
             }
         }
         

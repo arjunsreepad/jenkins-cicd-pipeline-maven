@@ -1,6 +1,9 @@
 def projectName = 'good-day'
 
 pipeline {
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('docker-cred')
+	}
     agent any
 
     stages {
@@ -34,7 +37,11 @@ pipeline {
         // Docker Build & Push
         stage("Docker Build & Push") {
             steps {
-                sh "docker build -t ${projectName} ."
+                sh '''
+                    docker build -t arjunsreepad/${projectName} .
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    docker push arjunsreepad/${projectName}
+                   '''
             }
         }
         
